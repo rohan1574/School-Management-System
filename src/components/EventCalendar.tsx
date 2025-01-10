@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import Calendar from "react-calendar";
+
 import "react-calendar/dist/Calendar.css";
 
 type ValuePiece = Date | null;
@@ -23,7 +23,6 @@ const EventCalendar = () => {
 
   return (
     <div className="bg-white p-4 rounded-md">
-      {value && <Calendar onChange={setValue} value={value} />}
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold my-4">Events</h1>
         <Image src="/moreDark.png" alt="More options" width={20} height={20} />
