@@ -1,4 +1,3 @@
-import { role } from "@/lib/data";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -36,14 +35,12 @@ const menuItems = [
         href: "/list/subjects",
         visible: ["admin"],
       },
-      
       {
         icon: "/lesson.png",
         label: "Lessons",
         href: "/list/lessons",
         visible: ["admin", "teacher"],
       },
-   
       {
         icon: "/calendar.png",
         label: "Events",
@@ -84,27 +81,31 @@ const menuItems = [
 ];
 
 const Menu = () => {
+  const userRole = "admin"; // Replace with dynamic role from authentication
+
   return (
-    <div className="mt-4 text-sm">
-      {menuItems.map((i) => (
-        <div className="flex flex-col gap-2" key={i.title}>
-          <span className="hidden lg:block text-gray-400 font-light my-4">
-            {i.title}
-          </span>
-          {i.items.map((item) => {
-            if (item.visible.includes(role)) {
-              return (
-                <Link
-                  href={item.href}
-                  key={item.label}
-                  className="flex items-center justify-center lg:justify-start gap-4 text-gray-500 py-2 md:px-2 rounded-md hover:bg-lamaSkyLight"
-                >
-                  <Image src={item.icon} alt="" width={20} height={20} />
-                  <span className="hidden lg:block">{item.label}</span>
-                </Link>
-              );
-            }
-          })}
+    <div className="menu-container">
+      {menuItems.map((section, index) => (
+        <div key={index} className="menu-section">
+          <h3 className="section-title">{section.title}</h3>
+          <ul className="menu-list">
+            {section.items
+              .filter(item => item.visible.includes(userRole)) // Filter based on user role
+              .map((item, idx) => (
+                <li key={idx} className="menu-item">
+                  <Link href={item.href} className="menu-link">
+                    <Image
+                      src={item.icon}
+                      alt={item.label}
+                      width={24}
+                      height={24}
+                      className="menu-icon"
+                    />
+                    <span className="menu-label">{item.label}</span>
+                  </Link>
+                </li>
+              ))}
+          </ul>
         </div>
       ))}
     </div>
